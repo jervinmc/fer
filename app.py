@@ -99,7 +99,7 @@ while True:
                 cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
                 cv2.rectangle(frameCopy, (fX, fY), (fX + fW, fY + fH),
                               (0, 0, 255), 2)
-
+    frameCopy = cv2.putText(frameCopy,'take',(0,0),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,0,255))
     cv2.imshow('Actual', frameCopy)
     cv2.imshow("Tabular", canvas)
      
