@@ -45,6 +45,7 @@ emotion_classifier = load_model(emotion_model_path, compile=False)
 EMOTIONS = ["angry" ,"disgust","scared", "happy", "sad", "surprised",
  "neutral"]
 
+negative_counter = 0
 
 cv2.namedWindow('Actual')
 
@@ -68,7 +69,6 @@ while True:
 
     #CLONING NG FRAME NATIN FOR 
     frameCopy = frame.copy()
-
     #A PROCESS NA PAG MAY NAKITANG FACES.
     if len(faces) > 0:
         faces = sorted(faces, reverse=True,
@@ -82,6 +82,15 @@ while True:
         preds = emotion_classifier.predict(roi)[0]
         emotion_probability = np.max(preds)
         label = EMOTIONS[preds.argmax()]
+        print(label)
+        if(label=='sad' or label=='angry' or label=='scared'):
+            negative_counter+=1
+            print(negative_counter)
+            if(negative_counter==50):
+                #put code shutdown here
+                print('warning shutdown')
+        else:
+            negative_counter=0
         globals()['currentLabel']=label
         updateCluster(label)
     else: continue
